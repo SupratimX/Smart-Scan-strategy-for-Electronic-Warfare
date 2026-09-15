@@ -1,0 +1,30 @@
+scenario_id: periodic_emitters
+description: "MVP demonstration: one fixed, one periodic (jitter), one burst emitter"
+seed: 1003
+n_slots: 1000
+noise_std_db: 2.5
+interference_bands: [8]
+emitters:
+  - kind: fixed
+    emitter_id: 0
+    band_id: 5
+    power_dbm: -60.0
+    active_from_slot: 0
+
+  - kind: periodic
+    emitter_id: 1
+    band_id: 14
+    power_dbm: -58.0
+    period_slots: 40
+    duty_cycle: 0.25
+    phase_offset_slots: 10
+    jitter_slots: 2.0
+    active_from_slot: 0
+
+  - kind: burst
+    emitter_id: 2
+    band_id: 22
+    power_dbm: -62.0
+    burst_duration_slots: 3
+    inter_burst_slots: 35
+    active_from_slot: 100

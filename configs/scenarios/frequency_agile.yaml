@@ -1,0 +1,24 @@
+scenario_id: frequency_agile
+description: "One frequency-agile emitter hopping among bands 0-15"
+seed: 1004
+n_slots: 1000
+noise_std_db: 2.0
+interference_bands: []
+emitters:
+  - kind: agile
+    emitter_id: 0
+    band_ids: [0, 2, 5, 7, 10, 13, 15]
+    power_dbm: -57.0
+    hop_interval_slots: 15
+    hop_pattern: random
+    active_from_slot: 0
+
+  - kind: periodic
+    emitter_id: 1
+    band_id: 20
+    power_dbm: -60.0
+    period_slots: 50
+    duty_cycle: 0.20
+    phase_offset_slots: 0
+    jitter_slots: 3.0
+    active_from_slot: 0

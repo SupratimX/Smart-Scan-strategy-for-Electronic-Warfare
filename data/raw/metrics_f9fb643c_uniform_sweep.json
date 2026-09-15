@@ -1,0 +1,31 @@
+{
+  "episode_id": "f9fb643c",
+  "scenario_id": "periodic_emitters",
+  "scheduler_name": "uniform_sweep",
+  "seed": 42,
+  "n_steps": 501,
+  "n_bands": 32,
+  "n_true_detections": 24,
+  "n_false_alarms": 21,
+  "n_true_opportunities": 24,
+  "n_empty_observations": 477,
+  "pd": 1.0,
+  "pfa": 0.0440251572327044,
+  "n_emitters_total": 3,
+  "n_emitters_intercepted": 3,
+  "interception_rate": 1.0,
+  "intercept_times": [
+    10.0,
+    82.0,
+    570.0
+  ],
+  "mean_intercept_time": 220.66666666666666,
+  "median_intercept_time": 82.0,
+  "p95_intercept_time": 521.1999999999999,
+  "coverage_ratio": 0.015625,
+  "mean_revisit_interval": 64.0,
+  "max_revisit_interval": 64.0,
+  "cumulative_reward": 38.49999999999999,
+  "mean_reward_per_step": 0.07684630738522953,
+  "prediction_accuracy": NaN
+}

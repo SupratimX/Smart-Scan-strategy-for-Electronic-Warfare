@@ -1,0 +1,10 @@
+n_bands: 32
+slot_duration_s: 0.001
+min_dwell_slots: 1
+max_dwell_slots: 4
+dwell_choices: [1, 2, 4]
+retune_delay_slots: 1
+false_alarm_rate: 0.05
+pd_at_snr0: 0.90
+snr_threshold_db: 10.0
+max_revisit_slots: 200
