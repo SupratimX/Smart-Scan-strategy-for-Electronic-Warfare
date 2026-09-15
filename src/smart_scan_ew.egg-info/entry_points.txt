@@ -1,0 +1,2 @@
+[console_scripts]
+smart-scan = smart_scan_ew.cli:main

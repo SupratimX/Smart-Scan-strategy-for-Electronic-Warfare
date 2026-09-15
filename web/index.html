@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Scan EW — Cognitive Electronic Support Radar Operations</title>
+  <meta name="description" content="AI/ML-based Electronic Support receiver scheduler for cognitive spectrum scanning, radar emitter interception, and adaptive dwell management.">
+  
+  <!-- Google Fonts: Inter and JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="cyber-theme">
+  <!-- Cyber HUD Grid Background -->
+  <div class="hud-grid-overlay"></div>
+  <div class="radar-scanline-ambient"></div>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="radar-glyph">
+          <span class="pulse-ring"></span>
+          <span class="blip"></span>
+        </div>
+        <div class="title-group">
+          <h1>SMART SCAN <span class="accent-text">EW</span></h1>
+          <span class="subtitle">Cognitive Electronic Support • Adaptive Spectrum Operations</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs" role="tablist">
+        <button class="nav-tab active" id="tabBtnLive" data-tab="livePanel" role="tab" aria-selected="true">
+          <span class="tab-icon">⚡</span> Tactical Scanner
+        </button>
+        <button class="nav-tab" id="tabBtnAnalytics" data-tab="analyticsPanel" role="tab" aria-selected="false">
+          <span class="tab-icon">📊</span> Benchmark Studio
+        </button>
+        <button class="nav-tab" id="tabBtnEmitters" data-tab="emittersPanel" role="tab" aria-selected="false">
+          <span class="tab-icon">🎯</span> Emitter Intelligence
+        </button>
+      </nav>
+
+      <!-- System Status Indicators -->
+      <div class="system-status">
+        <div class="status-indicator live">
+          <span class="status-dot"></span>
+          <span class="status-label" id="backendStatus">SYSTEM ONLINE</span>
+        </div>
+        <div class="receiver-badge">
+          <span class="label">SPECTRUM:</span>
+          <span class="val">32 BANDS (2.0–2.4 GHz)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- TAB 1: Tactical Live Scanner Panel -->
+    <main class="tab-content active" id="livePanel" role="tabpanel">
+      
+      <!-- Control Bar -->
+      <section class="control-panel glass-card">
+        <div class="control-group">
+          <label for="schedulerSelect">Scheduler Algorithm</label>
+          <div class="select-wrapper">
+            <select id="schedulerSelect" aria-label="Select Scheduler Algorithm">
+              <option value="thompson_sampling" selected>Thompson Sampling (Bayesian Bandit)</option>
+              <option value="periodicity_aware">Periodicity-Aware Forecaster</option>
+              <option value="greedy_occupancy">Greedy Occupancy Scanner</option>
+              <option value="round_robin">Round Robin (Starvation Guard)</option>
+              <option value="uniform_sweep">Uniform Sweep (Baseline Sequential)</option>
+              <option value="random_scan">Random Walk Scan</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="scenarioSelect">Emitter Scenario</label>
+          <div class="select-wrapper">
+            <select id="scenarioSelect" aria-label="Select Scenario">
+              <option value="periodic_emitters" selected>Periodic Emitters (3 Radar Pulse Trains)</option>
+              <option value="frequency_agile">Frequency-Agile Emitter (Hopping Radar)</option>
+              <option value="dense_environment">Dense EW Environment (6 Mixed Threats)</option>
+              <option value="fixed_emitters">Fixed Emitters (Continuous Wave)</option>
+              <option value="empty_spectrum">Empty Spectrum (Noise Floor Verification)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group sm">
+          <label for="seedInput">Random Seed</label>
+          <input type="number" id="seedInput" value="42" min="0" max="99999" aria-label="Simulation Seed">
+        </div>
+
+        <div class="control-group sm">
+          <label for="stepsInput">Steps</label>
+          <input type="number" id="stepsInput" value="120" min="20" max="500" step="10" aria-label="Number of Steps">
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+          <button id="btnRunSim" class="btn btn-primary" title="Execute simulation on backend">
+            <span class="btn-icon">▶</span> Run Scan
+          </button>
+          <button id="btnPlayPause" class="btn btn-secondary" title="Play or pause playback" disabled>
+            <span class="btn-icon">⏸</span> Pause
+          </button>
+          <button id="btnStep" class="btn btn-secondary" title="Single step forward" disabled>
+            <span class="btn-icon">⏭</span> Step
+          </button>
+          <button id="btnReset" class="btn btn-ghost" title="Reset scan simulation">
+            <span class="btn-icon">↺</span> Reset
+          </button>
+        </div>
+
+        <!-- Playback Speed Slider -->
+        <div class="control-group speed-control">
+          <div class="speed-label-group">
+            <label for="speedSlider">Scan Speed</label>
+            <span id="speedValue" class="speed-val">2x</span>
+          </div>
+          <input type="range" id="speedSlider" min="1" max="5" value="2" step="1" aria-label="Playback speed slider">
+        </div>
+      </section>
+
+      <!-- Key Tactical KPI Cards -->
+      <section class="kpi-grid">
+        <div class="kpi-card glass-card">
+          <div class="kpi-header">
+            <span class="kpi-title">PROBABILITY OF DETECTION (P<sub>d</sub>)</span>
+            <span class="kpi-badge hit">ACCURACY</span>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-val" id="kpiPd">0.000</span>
+            <span class="kpi-sub" id="kpiPdSub">0 / 0 signals</span>
+          </div>
+          <div class="kpi-bar-bg"><div class="kpi-bar-fill" id="kpiPdBar" style="width: 0%;"></div></div>
+        </div>
+
+        <div class="kpi-card glass-card">
+          <div class="kpi-header">
+            <span class="kpi-title">FALSE ALARM RATE (P<sub>fa</sub>)</span>
+            <span class="kpi-badge info">CFAR LIMIT ≤ 0.05</span>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-val" id="kpiPfa">0.000</span>
+            <span class="kpi-sub" id="kpiPfaSub">0 false alerts</span>
+          </div>
+          <div class="kpi-bar-bg"><div class="kpi-bar-fill warning" id="kpiPfaBar" style="width: 0%;"></div></div>
+        </div>
+
+        <div class="kpi-card glass-card">
+          <div class="kpi-header">
+            <span class="kpi-title">INTERCEPTION RATIO (IR)</span>
+            <span class="kpi-badge best">THREAT COVERAGE</span>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-val" id="kpiIr">0.000</span>
+            <span class="kpi-sub" id="kpiIrSub">0% intercepted</span>
+          </div>
+          <div class="kpi-bar-bg"><div class="kpi-bar-fill green" id="kpiIrBar" style="width: 0%;"></div></div>
+        </div>
+
+        <div class="kpi-card glass-card">
+          <div class="kpi-header">
+            <span class="kpi-title">MEAN INTERCEPT TIME (T̄<sub>int</sub>)</span>
+            <span class="kpi-badge time">LOWER IS BETTER</span>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-val" id="kpiTime">—</span>
+            <span class="kpi-sub">time slots</span>
+          </div>
+          <div class="kpi-bar-bg"><div class="kpi-bar-fill time" id="kpiTimeBar" style="width: 0%;"></div></div>
+        </div>
+
+        <div class="kpi-card glass-card">
+          <div class="kpi-header">
+            <span class="kpi-title">CUMULATIVE REWARD</span>
+            <span class="kpi-badge reward">POLICY VALUE</span>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-val" id="kpiReward">0.0</span>
+            <span class="kpi-sub" id="kpiStepCount">Step 0 / 0</span>
+          </div>
+          <div class="kpi-bar-bg"><div class="kpi-bar-fill reward" id="kpiRewardBar" style="width: 0%;"></div></div>
+        </div>
+      </section>
+
+      <!-- Tactical Visualizer Center: Spectrum + Waterfall & Belief State -->
+      <div class="tactical-layout">
+        
+        <!-- Left: RF Spectrum & Waterfall -->
+        <div class="tactical-main glass-card">
+          <div class="card-header">
+            <div class="header-left">
+              <span class="panel-icon">📡</span>
+              <h3>RF SPECTRUM & DWELL MONITOR</h3>
+              <span class="band-tag" id="currentDwellTag">Tuning: Idle</span>
+            </div>
+            <div class="header-right">
+              <span class="legend-chip hit"><span class="chip-dot"></span> Signal Hit</span>
+              <span class="legend-chip miss"><span class="chip-dot"></span> Missed Opportunity</span>
+              <span class="legend-chip fa"><span class="chip-dot"></span> False Alarm</span>
+              <span class="legend-chip scan"><span class="chip-dot"></span> Receiver Dwell</span>
+            </div>
+          </div>
+
+          <!-- Spectrum Canvas -->
+          <div class="canvas-container spectrum-container">
+            <canvas id="spectrumCanvas" width="800" height="230"></canvas>
+          </div>
+
+          <!-- Waterfall Spectrogram Canvas -->
+          <div class="card-subheader">
+            <span class="sub-title">TIME-FREQUENCY WATERFALL SPECTROGRAM</span>
+            <span class="sub-meta" id="waterfallMeta">Cascading history: 60 dwell intervals</span>
+          </div>
+          <div class="canvas-container waterfall-container">
+            <canvas id="waterfallCanvas" width="800" height="180"></canvas>
+          </div>
+        </div>
+
+        <!-- Right: Bayesian Belief State & Telemetry -->
+        <div class="tactical-side glass-card">
+          <div class="card-header">
+            <div class="header-left">
+              <span class="panel-icon">🧠</span>
+              <h3>BAYESIAN BELIEF STATE</h3>
+            </div>
+            <span class="confidence-badge" id="beliefSummaryBadge">P(Occupied)</span>
+          </div>
+          <p class="section-desc">
+            Estimated occupancy probability $P(\text{occupied})$ and uncertainty bounds per frequency band updated recursively via Beta-Bernoulli conjugate priors:
+          </p>
+
+          <!-- 32 Bands Belief State Matrix -->
+          <div class="belief-matrix-container" id="beliefMatrixContainer">
+            <!-- Dynamically populated 32 band bars -->
+          </div>
+
+          <!-- Algorithm Decision Reasoning Box -->
+          <div class="decision-reasoning-box">
+            <div class="reasoning-header">
+              <span class="icon">💡</span>
+              <span class="title">COGNITIVE SCHEDULER LOGIC</span>
+            </div>
+            <p id="decisionReasoningText" class="reasoning-content">
+              Select an algorithm and click <strong>Run Scan</strong> to begin adaptive electronic support scanning.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Event Telemetry Stream Log -->
+      <section class="telemetry-section glass-card">
+        <div class="card-header">
+          <div class="header-left">
+            <span class="panel-icon">📜</span>
+            <h3>TACTICAL INTERCEPTION & TELEMETRY STREAM</h3>
+          </div>
+          <div class="header-right">
+            <button id="btnClearLog" class="btn btn-xs btn-ghost">Clear Log</button>
+            <span class="badge count-badge" id="logCountBadge">0 events</span>
+          </div>
+        </div>
+
+        <div class="table-scroll-wrapper">
+          <table class="telemetry-table" id="telemetryTable">
+            <thead>
+              <tr>
+                <th>Slot</th>
+                <th>Time (s)</th>
+                <th>Tuned Band</th>
+                <th>Center Freq</th>
+                <th>Dwell</th>
+                <th>Energy Metric</th>
+                <th>Rx Power</th>
+                <th>Detection</th>
+                <th>Ground Truth</th>
+                <th>Outcome</th>
+                <th>Reward</th>
+              </tr>
+            </thead>
+            <tbody id="telemetryTableBody">
+              <tr class="empty-row">
+                <td colspan="11">No simulation events yet. Click <strong>Run Scan</strong> above.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- TAB 2: Benchmark Studio Panel -->
+    <section class="tab-content" id="analyticsPanel" role="tabpanel">
+      <div class="analytics-header glass-card">
+        <div class="header-content">
+          <h2>📊 Tactical Benchmark Analytics & Schedulers Leaderboard</h2>
+          <p>
+            Comprehensive evaluation comparing <strong>6 EW Schedulers</strong> across <strong>5 RF Scenarios</strong> over <strong>150 Monte Carlo episodes</strong>.
+          </p>
+        </div>
+        <button id="btnReloadBenchmark" class="btn btn-secondary">
+          <span class="btn-icon">🔄</span> Reload Benchmark Data
+        </button>
+      </div>
+
+      <!-- Benchmark Summary Comparison Cards -->
+      <div class="benchmark-highlight-grid">
+        <div class="metric-summary-card glass-card gold">
+          <div class="rank">#1 FASTEST INTERCEPTION</div>
+          <div class="scheduler-name">Thompson Sampling</div>
+          <div class="metric-val">118.5 <span class="unit">slots</span></div>
+          <div class="metric-desc">Minimizes mean emitter intercept time by balancing exploration & exploitation.</div>
+        </div>
+
+        <div class="metric-summary-card glass-card cyan">
+          <div class="rank">#2 PERIODIC EXPLOITATION</div>
+          <div class="scheduler-name">Periodicity-Aware Forecaster</div>
+          <div class="metric-val">137.5 <span class="unit">slots</span></div>
+          <div class="metric-desc">Uses autocorrelation history to anticipate upcoming radar pulse arrival windows.</div>
+        </div>
+
+        <div class="metric-summary-card glass-card">
+          <div class="rank">#3 DETERMINISTIC SWEEP</div>
+          <div class="scheduler-name">Uniform Sweep / Round Robin</div>
+          <div class="metric-val">148.2 <span class="unit">slots</span></div>
+          <div class="metric-desc">Standard uniform baseline ensuring starvation bounds at the cost of interception speed.</div>
+        </div>
+
+        <div class="metric-summary-card glass-card">
+          <div class="rank">HIGH GREEDY REWARD</div>
+          <div class="scheduler-name">Greedy Occupancy</div>
+          <div class="metric-val">541.7 <span class="unit">reward</span></div>
+          <div class="metric-desc">Exploits known active bands heavily; suffers on sparse, agile, or newly appearing emitters.</div>
+        </div>
+      </div>
+
+      <!-- Comparative Charts Grid -->
+      <div class="charts-grid">
+        <!-- Chart 1: Mean Intercept Time -->
+        <div class="chart-card glass-card">
+          <div class="card-header">
+            <h3>⚡ Mean Interception Time by Scheduler (Lower = Better)</h3>
+            <span class="badge info">All Scenarios</span>
+          </div>
+          <div class="canvas-container">
+            <canvas id="chartInterceptTime" width="500" height="280"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Cumulative Reward -->
+        <div class="chart-card glass-card">
+          <div class="card-header">
+            <h3>🏆 Mean Cumulative Episode Reward (Higher = Better)</h3>
+            <span class="badge reward">Optimization Metric</span>
+          </div>
+          <div class="canvas-container">
+            <canvas id="chartReward" width="500" height="280"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 3: Detection vs False Alarm Trade-off -->
+        <div class="chart-card glass-card">
+          <div class="card-header">
+            <h3>🎯 Detection Probability (Pd) vs False Alarm Rate (Pfa)</h3>
+            <span class="badge hit">CFAR Receiver Performance</span>
+          </div>
+          <div class="canvas-container">
+            <canvas id="chartRocTradeoff" width="500" height="280"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 4: Scenario Breakdown -->
+        <div class="chart-card glass-card">
+          <div class="card-header">
+            <h3>🌐 Interception Rate Across Scenarios</h3>
+            <span class="badge best">Scenario Resilience</span>
+          </div>
+          <div class="canvas-container">
+            <canvas id="chartScenarioBreakdown" width="500" height="280"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benchmark Leaderboard Table -->
+      <section class="benchmark-table-section glass-card">
+        <div class="card-header">
+          <h3>📋 Full Benchmark Results Leaderboard (150 Episodes)</h3>
+          <div class="filter-controls">
+            <select id="leaderboardScenarioFilter" aria-label="Filter leaderboard by scenario">
+              <option value="ALL" selected>All Scenarios</option>
+              <option value="periodic_emitters">Periodic Emitters</option>
+              <option value="frequency_agile">Frequency Agile</option>
+              <option value="dense_environment">Dense Environment</option>
+              <option value="fixed_emitters">Fixed Emitters</option>
+              <option value="empty_spectrum">Empty Spectrum</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-scroll-wrapper">
+          <table class="leaderboard-table" id="leaderboardTable">
+            <thead>
+              <tr>
+                <th>Scheduler</th>
+                <th>Scenario</th>
+                <th>Pd (Detection)</th>
+                <th>Pfa (False Alarm)</th>
+                <th>Interception Rate</th>
+                <th>Mean T_int (slots)</th>
+                <th>P95 T_int (slots)</th>
+                <th>Coverage</th>
+                <th>Reward</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+              <!-- Dynamically populated from API -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <!-- TAB 3: Emitter Intelligence Panel -->
+    <section class="tab-content" id="emittersPanel" role="tabpanel">
+      <div class="glass-card">
+        <div class="card-header">
+          <h2>🎯 Emitter Threat Intelligence & RF Signal Models</h2>
+        </div>
+        <p class="section-desc">
+          Electronic Warfare simulation parameters for radar emitter types defined in the tactical environment:
+        </p>
+        
+        <div class="emitter-types-grid">
+          <div class="threat-card glass-card">
+            <div class="threat-header">
+              <span class="badge threat-radar">RADAR</span>
+              <h4>Periodic Pulsed Radar</h4>
+            </div>
+            <p class="threat-detail">Fixed PRF pulsed radar with deterministic repetition interval and pulse width.</p>
+            <ul class="threat-specs">
+              <li><strong>Center Frequency:</strong> Band 5, 12, 22</li>
+              <li><strong>Pulse Repetition:</strong> 15–30 time slots</li>
+              <li><strong>Duty Cycle:</strong> 0.15–0.30</li>
+              <li><strong>Transmit Power:</strong> 20–30 dBm (ERP)</li>
+              <li><strong>Key Challenge:</strong> Periodicity-aware scheduler must synchronize dwell windows with pulse arrival.</li>
+            </ul>
+          </div>
+
+          <div class="threat-card glass-card">
+            <div class="threat-header">
+              <span class="badge threat-agile">AGILE</span>
+              <h4>Frequency-Agile Radar</h4>
+            </div>
+            <p class="threat-detail">Pseudorandom frequency-hopping radar switching channels across dwell intervals.</p>
+            <ul class="threat-specs">
+              <li><strong>Hopping Pool:</strong> Bands 8, 14, 19, 27</li>
+              <li><strong>Hop Interval:</strong> 8–12 slots</li>
+              <li><strong>Transmit Power:</strong> 25 dBm</li>
+              <li><strong>Key Challenge:</strong> Bandit schedulers must use discounting to adapt to non-stationary channel states.</li>
+            </ul>
+          </div>
+
+          <div class="threat-card glass-card">
+            <div class="threat-header">
+              <span class="badge threat-burst">BURST</span>
+              <h4>Burst Communications / Jammer</h4>
+            </div>
+            <p class="threat-detail">Intermittent high-power transmission bursts with Poisson arrival statistics.</p>
+            <ul class="threat-specs">
+              <li><strong>Transmission:</strong> Poisson burst distribution</li>
+              <li><strong>Burst Duration:</strong> 3–6 slots</li>
+              <li><strong>Transmit Power:</strong> 35 dBm</li>
+              <li><strong>Key Challenge:</strong> Rapid dwell tuning is essential to capture brief transmission bursts.</li>
+            </ul>
+          </div>
+
+          <div class="threat-card glass-card">
+            <div class="threat-header">
+              <span class="badge threat-fixed">CW</span>
+              <h4>Fixed Continuous Wave (CW)</h4>
+            </div>
+            <p class="threat-detail">Continuous surveillance broadcast emitter occupying a persistent spectrum channel.</p>
+            <ul class="threat-specs">
+              <li><strong>Activity:</strong> 100% duty cycle</li>
+              <li><strong>Transmit Power:</strong> 15 dBm</li>
+              <li><strong>Key Challenge:</strong> Avoid over-dwelling once identified to allow search across remaining spectrum.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-meta">
+        <span>Smart Scan EW v0.1.0 • Python 3.14 + SciPy + NumPy + scikit-learn</span>
+        <span>Defensive Electronic Support Research Specification • Fully Seeded Reproducible Simulation</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
