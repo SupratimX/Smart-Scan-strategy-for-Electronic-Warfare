@@ -1,0 +1,30 @@
+{
+  "episode_id": "f4ed5a91",
+  "scenario_id": "periodic_emitters",
+  "scheduler_name": "thompson_sampling",
+  "seed": 42,
+  "n_steps": 735,
+  "n_bands": 32,
+  "n_true_detections": 584,
+  "n_false_alarms": 6,
+  "n_true_opportunities": 584,
+  "n_empty_observations": 151,
+  "pd": 1.0,
+  "pfa": 0.039735099337748346,
+  "n_emitters_total": 3,
+  "n_emitters_intercepted": 2,
+  "interception_rate": 0.6666666666666666,
+  "intercept_times": [
+    31.0,
+    326.0
+  ],
+  "mean_intercept_time": 178.5,
+  "median_intercept_time": 178.5,
+  "p95_intercept_time": 311.25,
+  "coverage_ratio": 0.02296875,
+  "mean_revisit_interval": 38.307254623044095,
+  "max_revisit_interval": 274.0,
+  "cumulative_reward": 641.3000000000051,
+  "mean_reward_per_step": 0.872517006802728,
+  "prediction_accuracy": NaN
+}

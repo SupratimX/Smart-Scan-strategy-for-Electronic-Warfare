@@ -1,0 +1,7 @@
+scenario_id: empty_spectrum
+description: "No emitters present — used for false-alarm calibration"
+seed: 1001
+n_slots: 500
+emitters: []
+noise_std_db: 2.0
+interference_bands: []

@@ -1,0 +1,49 @@
+scenario_id: dense_environment
+description: "Dense environment: 6 emitters across all band types, high noise"
+seed: 1005
+n_slots: 1000
+noise_std_db: 4.0
+interference_bands: [3, 11, 19, 27]
+emitters:
+  - kind: fixed
+    emitter_id: 0
+    band_id: 1
+    power_dbm: -55.0
+    active_from_slot: 0
+  - kind: fixed
+    emitter_id: 1
+    band_id: 9
+    power_dbm: -68.0
+    active_from_slot: 0
+  - kind: periodic
+    emitter_id: 2
+    band_id: 6
+    power_dbm: -60.0
+    period_slots: 30
+    duty_cycle: 0.33
+    phase_offset_slots: 5
+    jitter_slots: 1.5
+    active_from_slot: 0
+  - kind: periodic
+    emitter_id: 3
+    band_id: 18
+    power_dbm: -63.0
+    period_slots: 60
+    duty_cycle: 0.20
+    phase_offset_slots: 20
+    jitter_slots: 3.0
+    active_from_slot: 0
+  - kind: burst
+    emitter_id: 4
+    band_id: 25
+    power_dbm: -59.0
+    burst_duration_slots: 2
+    inter_burst_slots: 25
+    active_from_slot: 0
+  - kind: agile
+    emitter_id: 5
+    band_ids: [4, 8, 12, 16, 20, 28]
+    power_dbm: -56.0
+    hop_interval_slots: 20
+    hop_pattern: pseudo_random
+    active_from_slot: 0

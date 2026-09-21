@@ -1,0 +1,22 @@
+scenario_id: fixed_emitters
+description: "Three fixed emitters on bands 3, 12, 24"
+seed: 1002
+n_slots: 1000
+noise_std_db: 2.0
+interference_bands: [5]
+emitters:
+  - kind: fixed
+    emitter_id: 0
+    band_id: 3
+    power_dbm: -55.0
+    active_from_slot: 0
+  - kind: fixed
+    emitter_id: 1
+    band_id: 12
+    power_dbm: -65.0
+    active_from_slot: 50
+  - kind: fixed
+    emitter_id: 2
+    band_id: 24
+    power_dbm: -58.0
+    active_from_slot: 100

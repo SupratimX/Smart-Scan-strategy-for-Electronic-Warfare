@@ -1,0 +1,200 @@
+[
+  {
+    "scheduler": "uniform_sweep",
+    "seed": 100,
+    "pd": 1.0,
+    "pfa": 0.03508771929824561,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 67.5,
+    "p95_intercept_time": 122.0,
+    "coverage_ratio": 0.015625,
+    "cumulative_reward": 61.999999999999446
+  },
+  {
+    "scheduler": "uniform_sweep",
+    "seed": 101,
+    "pd": 1.0,
+    "pfa": 0.04824561403508772,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 61.4,
+    "p95_intercept_time": 62.0,
+    "coverage_ratio": 0.015625,
+    "cumulative_reward": 58.99999999999948
+  },
+  {
+    "scheduler": "uniform_sweep",
+    "seed": 102,
+    "pd": 1.0,
+    "pfa": 0.030634573304157548,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 64.4,
+    "p95_intercept_time": 65.10000000000005,
+    "coverage_ratio": 0.015625,
+    "cumulative_reward": 61.99999999999944
+  },
+  {
+    "scheduler": "random_scan",
+    "seed": 100,
+    "pd": 1.0,
+    "pfa": 0.035164835164835165,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 43.8,
+    "p95_intercept_time": 88.50000000000003,
+    "coverage_ratio": 0.0158125,
+    "cumulative_reward": 68.94999999999942
+  },
+  {
+    "scheduler": "random_scan",
+    "seed": 101,
+    "pd": 1.0,
+    "pfa": 0.037444933920704845,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 16.7,
+    "p95_intercept_time": 50.0,
+    "coverage_ratio": 0.01578125,
+    "cumulative_reward": 69.29999999999937
+  },
+  {
+    "scheduler": "random_scan",
+    "seed": 102,
+    "pd": 1.0,
+    "pfa": 0.030634573304157548,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 78.75,
+    "p95_intercept_time": 100.0,
+    "coverage_ratio": 0.01590625,
+    "cumulative_reward": 71.39999999999931
+  },
+  {
+    "scheduler": "round_robin",
+    "seed": 100,
+    "pd": 1.0,
+    "pfa": 0.03508771929824561,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 67.5,
+    "p95_intercept_time": 122.0,
+    "coverage_ratio": 0.015625,
+    "cumulative_reward": 61.999999999999446
+  },
+  {
+    "scheduler": "round_robin",
+    "seed": 101,
+    "pd": 1.0,
+    "pfa": 0.04824561403508772,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 61.4,
+    "p95_intercept_time": 62.0,
+    "coverage_ratio": 0.015625,
+    "cumulative_reward": 58.99999999999948
+  },
+  {
+    "scheduler": "round_robin",
+    "seed": 102,
+    "pd": 1.0,
+    "pfa": 0.030634573304157548,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 64.4,
+    "p95_intercept_time": 65.10000000000005,
+    "coverage_ratio": 0.015625,
+    "cumulative_reward": 61.99999999999944
+  },
+  {
+    "scheduler": "greedy_occupancy",
+    "seed": 100,
+    "pd": 1.0,
+    "pfa": 0.03954802259887006,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 176.45,
+    "p95_intercept_time": 230.0,
+    "coverage_ratio": 0.02634375,
+    "cumulative_reward": 738.9500000000068
+  },
+  {
+    "scheduler": "greedy_occupancy",
+    "seed": 101,
+    "pd": 1.0,
+    "pfa": 0.06829268292682927,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 178.9,
+    "p95_intercept_time": 230.0,
+    "coverage_ratio": 0.02634375,
+    "cumulative_reward": 707.4500000000083
+  },
+  {
+    "scheduler": "greedy_occupancy",
+    "seed": 102,
+    "pd": 1.0,
+    "pfa": 0.032432432432432434,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 174.8,
+    "p95_intercept_time": 234.0,
+    "coverage_ratio": 0.02634375,
+    "cumulative_reward": 731.4500000000065
+  },
+  {
+    "scheduler": "thompson_sampling",
+    "seed": 100,
+    "pd": 1.0,
+    "pfa": 0.031007751937984496,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 24.75,
+    "p95_intercept_time": 51.45,
+    "coverage_ratio": 0.02025,
+    "cumulative_reward": 564.2500000000045
+  },
+  {
+    "scheduler": "thompson_sampling",
+    "seed": 101,
+    "pd": 1.0,
+    "pfa": 0.05517241379310345,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 34.4,
+    "p95_intercept_time": 53.60000000000001,
+    "coverage_ratio": 0.02140625,
+    "cumulative_reward": 588.8000000000045
+  },
+  {
+    "scheduler": "thompson_sampling",
+    "seed": 102,
+    "pd": 1.0,
+    "pfa": 0.0196078431372549,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 59.5,
+    "p95_intercept_time": 89.0,
+    "coverage_ratio": 0.02221875,
+    "cumulative_reward": 614.2000000000041
+  },
+  {
+    "scheduler": "periodicity_aware",
+    "seed": 100,
+    "pd": 1.0,
+    "pfa": 0.03821656050955414,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 52.0,
+    "p95_intercept_time": 61.2,
+    "coverage_ratio": 0.022,
+    "cumulative_reward": 599.6500000000045
+  },
+  {
+    "scheduler": "periodicity_aware",
+    "seed": 101,
+    "pd": 1.0,
+    "pfa": 0.022988505747126436,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 185.65,
+    "p95_intercept_time": 264.0,
+    "coverage_ratio": 0.023125,
+    "cumulative_reward": 625.0500000000045
+  },
+  {
+    "scheduler": "periodicity_aware",
+    "seed": 102,
+    "pd": 1.0,
+    "pfa": 0.042735042735042736,
+    "interception_rate": 1.0,
+    "mean_intercept_time": 18.75,
+    "p95_intercept_time": 39.45,
+    "coverage_ratio": 0.01596875,
+    "cumulative_reward": 419.2000000000037
+  }
+]
