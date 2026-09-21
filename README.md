@@ -10,22 +10,31 @@ to minimise interception time while maintaining high detection and low false-ala
 
 ## Quick Start
 
-### 1. Install
+### 1. Install Backend
 
 ```bash
-cd smart-scan-ew
+cd smart-scan-ew/backend
 pip install -e ".[dev]"
 ```
 
-### 2. One-command acceptance test (generates data → evaluates all schedulers → plots → report)
+### 2. Run the Web Frontend
 
 ```bash
+# Serve the frontend locally:
+cd ../frontend
+npx serve .
+```
+
+### 3. One-command acceptance test (generates data → evaluates all schedulers → plots → report)
+
+```bash
+cd ../backend
 python scripts/run_all.py
 ```
 
 Report is written to `artifacts/reports/benchmark.html`.
 
-### 3. Live terminal scanner demo
+### 4. Live terminal scanner demo
 
 ```bash
 # Watch Thompson sampling scan bands and track occupancy beliefs live in the terminal
@@ -35,7 +44,7 @@ python scripts/demo.py --scheduler thompson_sampling --steps 30
 python scripts/demo.py --scheduler periodicity_aware --scenario configs/scenarios/periodic_emitters.yaml
 ```
 
-### 4. Individual pipeline scripts
+### 5. Individual pipeline scripts
 
 ```bash
 # Generate synthetic dataset
@@ -51,7 +60,7 @@ python scripts/evaluate.py --suite configs/evaluation/benchmark_suite.yaml --see
 python scripts/make_report.py --results-dir artifacts/results --output artifacts/reports/benchmark.html
 ```
 
-### 5. Run tests
+### 6. Run tests
 
 ```bash
 pytest tests/ -v --cov=smart_scan_ew --cov-report=term-missing
@@ -63,17 +72,22 @@ pytest tests/ -v --cov=smart_scan_ew --cov-report=term-missing
 
 ```
 smart-scan-ew/
-├── configs/           YAML scenario, receiver, training, and evaluation configs
-├── src/smart_scan_ew/ Main library
-│   ├── environment/   RF simulator, emitters, propagation, receiver, noise
-│   ├── detection/     Energy detector and feature extractor
-│   ├── state_estimation/ Occupancy, periodicity, and belief-state estimators
-│   ├── schedulers/    Uniform, random, round-robin, greedy, bandit, periodic
-│   └── evaluation/    Metrics, episode runner, report generator
-├── scripts/           CLI entry-point scripts
-├── tests/             Unit, property, and integration tests
-├── artifacts/         Generated models, reports, and figures
-└── data/              Raw, interim, and processed datasets
+├── backend/           Python backend (Simulation & Machine Learning)
+│   ├── configs/       YAML scenario, receiver, training, and evaluation configs
+│   ├── src/smart_scan_ew/ Main library
+│   │   ├── environment/   RF simulator, emitters, propagation, receiver, noise
+│   │   ├── detection/     Energy detector and feature extractor
+│   │   ├── state_estimation/ Occupancy, periodicity, and belief-state estimators
+│   │   ├── schedulers/    Uniform, random, round-robin, greedy, bandit, periodic
+│   │   └── evaluation/    Metrics, episode runner, report generator
+│   ├── scripts/       CLI entry-point scripts
+│   ├── tests/         Unit, property, and integration tests
+│   ├── artifacts/     Generated models, reports, and figures
+│   └── data/          Raw, interim, and processed datasets
+└── frontend/          Web user interface
+    ├── app.js         Frontend application logic
+    ├── index.html     Main UI structure
+    └── style.css      Styling
 ```
 
 ---
